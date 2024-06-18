@@ -1,0 +1,53 @@
+version: "3"
+
+services:
+
+  cache: 
+    image: "redis:latest"
+    container_name: hillel_support_cache
+    ports:
+      - "6380:6379"
+
+  broker: 
+    image: "redis:latest"
+    container_name: hillel_support_broker
+    ports:
+      - "6379:6379"
+
+  mailing:
+    image: mailhog/mailhog:latest
+    container_name: hillel_support_mailing
+    env_file: ".env"
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+
+  database: 
+    image: "postgres:16"
+    container_name: hillel_support_database
+    # environment:
+    #   - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+    ports:
+      - "5432:5432"
+    env_file: ".env"
+    volumes:
+      - "pg_data:/var/lib/postgresql/data"
+
+  api:
+    build: 
+      context: .
+      dockerfile: Dockerfile 
+
+    image: hillel_support
+    container_name: hillel_support_api
+    ports: 
+      - "8000:8000"   
+    env_file: ".env"  
+    depends_on:
+      - database
+    volumes:
+      - ./:/app/
+                      
+
+volumes:
+  pg_data: {}
