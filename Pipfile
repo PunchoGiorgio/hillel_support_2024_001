@@ -1,0 +1,28 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+mysqlclient = "*"
+requests = "*"
+django = "*"
+celery = { version = "==5.4.0", extras = ["redis"] }
+djangorestframework = "*"
+djangorestframework-simplejwt = { version = "~=5.3.1", extras = ["crypto"] }
+psycopg = "*"
+python-decouple = "*"
+pkgconfig = "*"
+apache-airflow-providers-mysql = "*"
+redis = { version = "~=5.0", extras = ["hiredis"] }
+eventlet = "*"
+mailhog = "*"
+
+[dev-packages]
+black = "*"
+isort = "*"
+ruff = "*"
+flake8 = "*"
+
+[requires]
+python_version = "3.11"
